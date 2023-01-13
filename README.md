@@ -51,3 +51,5 @@ DATABASES = {
 * Perform migrations using the `python manage.py migrate` command
 * Сreate a superuser with the command `python manage.py createsuperuser`
 * Start the server with the command `python manage.py runserver`
+
+The bootstrap template was used for the project https://bootstrapmade.com/devfolio-bootstrap-portfolio-html-template/
