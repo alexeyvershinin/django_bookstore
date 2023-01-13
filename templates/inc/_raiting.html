@@ -1,0 +1,23 @@
+{% if book_raiting == 1 %}
+    <i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+    <i class="bi bi-star"></i><i class="bi bi-star"></i>
+    <i class="bi bi-star"></i>
+{% elif book_raiting == 2 %}
+    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+    <i class="bi bi-star"></i><i class="bi bi-star"></i>
+    <i class="bi bi-star"></i>
+{% elif book_raiting == 3 %}
+    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+        class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+    <i class="bi bi-star"></i>
+{% elif book_raiting == 4 %}
+    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+    <i class="bi bi-star"></i>
+{% elif book_raiting == 5 %}
+    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+    <i class="bi bi-star-fill"></i>
+{% else %}
+    {{ book_raiting }}
+{% endif %}

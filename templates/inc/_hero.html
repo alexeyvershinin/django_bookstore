@@ -1,0 +1,26 @@
+{% load static %}
+{% load user_tags %}
+<div class="hero hero-single route bg-image" style="background-image: url({% static 'assets/img/book.jpg' %})">
+    <div class="overlay-mf"></div>
+    <div class="hero-content display-table">
+        <div class="table-cell">
+            <div class="container">
+                <h2 class="hero-title mb-4">{{ breadcrumbs }}</h2>
+                <ol class="breadcrumb d-flex justify-content-center">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'books_list' %}">Все</a>
+                    </li>
+                    {% show_genre %}
+                </ol>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <form action="{% url 'search' %}" method="get" class="d-flex" role="search">
+                        <input class="form-control me-2" name="q" type="search" placeholder="Поиск по..." aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit">Найти</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

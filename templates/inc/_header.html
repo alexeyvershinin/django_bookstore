@@ -1,0 +1,43 @@
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <h1 class="logo"><a href="#">Library</a></h1>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                {% if request.user.is_authenticated %}
+                    <h1 class="logo"><a>Добро пожаловать, {{ user.username }}</a></h1>
+                    <li><a class="nav-link scrollto" href="{% url 'user_logout' %}">Выйти</a></li>
+                {% else %}
+                    {% with url_name=request.resolver_match.url_name %}
+                        <li><a class="nav-link scrollto {% if url_name == 'user_login' %}active{% endif %}"
+                               href="{% url 'user_login' %}">Войти</a></li>
+                        <li><a class="nav-link scrollto {% if url_name == 'user_register' %}active{% endif %}"
+                               href="{% url 'user_register' %}">Регистрация</a></li>
+                    {% endwith %}
+                {% endif %}
+                {% with url_name=request.resolver_match.url_name %}
+                    <li><a class="nav-link scrollto {% if url_name == 'home' %}active{% endif %}"
+                           href="{% url 'home' %}">Главная</a></li>
+                    <li>
+                        <a class="nav-link scrollto {% if url_name == 'books_list' or url_name == 'detail_books' or url_name == 'edit_book'  or url_name == 'genre' %}active{% endif %}"
+                           href="{% url 'books_list' %}">Каталог книг</a></li>
+                    <li><a class="nav-link scrollto {% if url_name == 'authors_list' %}active{% endif %}"
+                           href="{% url 'authors_list' %}">Авторы</a></li>
+                    <li><a class="nav-link scrollto {% if url_name == 'feedback' %}active{% endif %}"
+                           href="{% url 'feedback' %}">Обратная связь</a></li>
+                    <li><a class="nav-link scrollto {% if url_name == 'list_cart' %}active{% endif %}"
+                           href="{% url 'list_cart' %}">Корзина</a></li>
+                    {% if request.user.is_superuser or user.groups.all.0.name == 'employee' %}
+                        <li><a class="nav-link scrollto {% if url_name == 'employee' %}active{% endif %}"
+                               href="{% url 'employee' %}">Служебная страница</a></li>
+                    {% endif %}
+                {% endwith %}
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header>
+<!-- End Header -->
