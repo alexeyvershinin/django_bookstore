@@ -52,4 +52,6 @@ DATABASES = {
 * Сreate a superuser with the command `python manage.py createsuperuser`
 * Start the server with the command `python manage.py runserver`
 
+For your convenience, I have included a database dump file in the repository `bookstore.sql`. Open the created database in pgAdmin, right-click and select Query Tool. In the tab that opens, click open file and select dump_db.sql after that, you just have to run the query, if you are using a database dump, you do not need to perform migrations
+
 The bootstrap template was used for the project https://bootstrapmade.com/devfolio-bootstrap-portfolio-html-template/
