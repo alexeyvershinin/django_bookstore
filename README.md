@@ -32,4 +32,22 @@ The project is an online version of a modern bookstore, where the user can easil
 
 ### Installation
 
-Clone the repository using the command in the terminal `git clone https://github.com/alexeyvershinin/django_bookstore.git` or download the archive from the [link](https://github.com/alexeyvershinin/django_bookstore/archive/refs/heads/main.zip)
+* Clone the repository using the command in the terminal `git clone https://github.com/alexeyvershinin/django_bookstore.git` or download the archive from the [link](https://github.com/alexeyvershinin/django_bookstore/archive/refs/heads/main.zip)
+* Install dependencies from the file requirements.txt using the `pip install -r requirements.txt` command
+* In the file `settings.py` write down the connection parameters to your database, when developing the project I used Postgresql 14, but you can use any database convenient to you, according to the Django documentation
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db_name',
+        'USER': 'db_user',
+        'PASSWORD': 'db_user_password',
+        'HOST': 'db_host',
+        'PORT': 'db_port_number',
+    }
+}
+```
+* Important! If you see an error `cannot import name 'ungettext_lazy' from 'django.utils.translation'`, you need to edit the file `..\Lib\site-packages\url_filter\validators.py` which is located in your virtual environment or in a folder with a local Python(if you don't use venv) by replacing all the `ungettext_lazy` lines with `gettext_lazy`
+* Perform migrations using the `python manage.py migrate` command
+* Сreate a superuser with the command `python manage.py createsuperuser`
+* Start the server with the command `python manage.py runserver`
