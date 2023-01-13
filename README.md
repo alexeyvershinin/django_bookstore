@@ -29,3 +29,7 @@ The project is an online version of a modern bookstore, where the user can easil
 ### ER model
 
 <img src="screenshots/ER.png">
+
+### Installation
+
+Clone the repository using the command in the terminal `git clone https://github.com/alexeyvershinin/django_bookstore.git` or download the archive from the [link](https://github.com/alexeyvershinin/django_bookstore/archive/refs/heads/main.zip)
