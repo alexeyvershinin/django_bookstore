@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    {% include 'inc/_hero.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <section id="services" class="services-mf pt-5 route">
+        <div class="container">
+            <div class="row">
+                {% include 'inc/_alerts.html' %}
+                <div class="col-sm-12">
+                    <div class="title-box text-center">
+                        <p class="subtitle-a">
+                            Здесь Вы можете увидеть добавленные в корзину книги
+                        </p>
+                        <div class="line-mf"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="service-box">
+                        <div class="service-ico">
+                            <span class="ico-circle"><i class="bi bi-cart"></i></span>
+                        </div>
+                        <div class="service-content">
+                            <h2 class="s-title">Корзина покупателя</h2>
+                        </div>
+                        <div class="service-content">
+                            <div class="row">
+                                <table class="table table-bordered table-striped table-hover align-middle text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Название книги</th>
+                                        <th scope="col">Автор</th>
+                                        <th scope="col">Жанр книги</th>
+                                        <th scope="col">Фото</th>
+                                        <th scope="col">Количество шт.</th>
+                                        <th scope="col">Цена за шт.</th>
+                                        <th scope="col">Итоговая цена</th>
+                                        <th scope="col">Удаление</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in cart %}
+                                        {% with product_obj=item.book %}
+                                            <tr>
+                                                <th scope="row">
+                                                    <a href="{{ product_obj.get_absolute_url }}">
+                                                        {{ product_obj.title }}
+                                                    </a>
+                                                </th>
+                                                <td>{{ item.book.owner }}</td>
+                                                <td>
+                                                    {% for genre in product_obj.genres.all %}
+                                                        {{ genre.title }}
+                                                    {% endfor %}
+                                                </td>
+                                                <td>
+                                                    {% if product_obj.photo_cover %}
+                                                        <img src="{{ product_obj.photo_cover.url }}" alt="..."
+                                                             width="50">
+                                                    {% else %}
+                                                        <img src="{% static 'assets/img/no_foto.jpg' %}" alt="..."
+                                                             width="50">
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ item.count_book }}</td>
+                                                <td>₽ {{ item.price_book }}</td>
+                                                <td>{{ item.total_price }}</td>
+                                                <td>
+                                                    <a href="{% url 'remove_cart' product_obj.pk %}"
+                                                       class="btn btn-danger">Удалить</a>
+                                                </td>
+                                            </tr>
+                                        {% endwith %}
+                                    {% endfor %}
+                                    <tr>
+                                        <td>Всего:</td>
+                                        <td colspan="4"></td>
+                                        <td>₽ {{ cart.get_total_full_price }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    {% if cart|length > 0 %}
+                                        <a href="{% url 'ordering' %}" class="btn btn-primary">Оформить заказ</a>
+                                    {% else %}
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                            Оформить заказ
+                                        </button>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ваша корзина пуста</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Чтобы оформить заказ, Вы должны добавить товары в корзину
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Понятно
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <a href="{% url 'clear_cart' %}" class="btn btn-outline-danger">Очистить корзину</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+

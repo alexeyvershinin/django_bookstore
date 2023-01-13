@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<center><h2>Ваш заказ сформирован</h2></center>
+<h4>Заказ №{{ order.pk }}</h4>
+<h4>Статус заказа: {{ order.status }}</h4>
+<h4>Адрес доставки</h4><hr>
+<p>
+    {{ address.zip_code }} г.{{ address.city }} улица {{ address.street }} дом {{ address.house_number }}<br>
+    {% if address.house_frame %}
+        корпус {{ address.house_frame }}
+    {% endif %}<br>
+    {% if address.flat %}
+        квартира/офис {{ address.flat }}
+    {% endif %}
+</p><hr>
+<h4>Контакты</h4>
+<p>email: {{ address.email }}</p>
+<p>телефон: {{ address.phone }}</p><hr>
+<table>
+    <tr>
+        <th>Название книги</th>
+        <th>Автор</th>
+        <th>Количество шт.</th>
+        <th>Цена за шт.</th>
+        <th>Итоговая цена</th>
+    </tr>
+    {% for item in cart %}
+        {% with product_obj=item.book %}
+            <tr>
+                <td><center>{{ product_obj.title }}</center></td>
+                <td><center>{{ item.book.owner }}</center></td>
+                <td><center>{{ item.count_book }}</center></td>
+                <td><center>₽ {{ item.price_book }}</center></td>
+                <td><center>{{ item.total_price }}</center></td>
+            </tr>
+        {% endwith %}
+    {% endfor %}
+    <tr>
+        <td>Всего:</td>
+        <td colspan="4"></td>
+        <td><center>₽ {{ cart.get_total_full_price }}</center></td>
+    </tr>
+</table>
+</body>
+</html>

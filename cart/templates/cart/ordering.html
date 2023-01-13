@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    {% include 'inc/_hero.html' %}
+{% endblock %}
+
+{% block content %}
+    <section class="blog-wrapper sect-pt4" id="blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="title-box text-center">
+                        <p class="subtitle-a">
+                            Чтобы оформить заказ заполните форму
+                        </p>
+                        <div class="line-mf"></div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        {% include 'inc/_alerts.html' %}
+                        <div class="form-comments">
+                            <div class="title-box-2">
+                                <h3 class="title-left">
+                                    Адрес доставки
+                                </h3>
+                            </div>
+                            <form method="post" class="form-mf">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            {{ form.city }}
+                                        </div>
+                                        {{ form.city.errors }}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            {{ form.zip_code }}
+                                        </div>
+                                        {{ form.zip_code.errors }}
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="form-group">
+                                            {{ form.street }}
+                                        </div>
+                                        {{ form.street.errors }}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            {{ form.house_number }}
+                                        </div>
+                                        {{ form.house_number.errors }}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            {{ form.house_frame }}
+                                        </div>
+                                        {{ form.house_frame.errors }}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            {{ form.flat }}
+                                        </div>
+                                        {{ form.flat.errors }}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            {{ form.phone }}
+                                        </div>
+                                        {{ form.phone.errors }}
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="form-group">
+                                            {{ form.email }}
+                                        </div>
+                                        {{ form.email.errors }}
+                                    </div>
+                                    <p>*поля обязательны для заполнения</p>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="button button-a button-rouded">Оформить
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+
