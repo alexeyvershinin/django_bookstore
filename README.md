@@ -24,3 +24,5 @@ The project is an online version of a modern bookstore, where the user can easil
 - sending an html email with order confirmation to the client's email
 
 ### ER model
+
+<img src="screenshots/ER.png">
