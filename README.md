@@ -1,6 +1,7 @@
 # django_bookstore
 Final certification work on the course backend - development on the Django framework. This project can be used as a template for the development of online stores or e-commerce sites.
 
+#### Video demonstration of the project
 [![Project demonstration](https://img.youtube.com/vi/Zs6u9dCyu4s/0.jpg)](https://www.youtube.com/watch?v=Zs6u9dCyu4s)
 
 ## Project Description
