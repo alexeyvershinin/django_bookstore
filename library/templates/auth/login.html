@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    <!-- ======= Hero Section ======= -->
+    <div id="hero" class="hero route bg-image" style="background-image: url({% static 'assets/img/book.jpg' %})">
+        <div class="overlay-itro"></div>
+        <div class="hero-content display-table">
+            <div class="table-cell">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-5">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'success' %}
+                                        <div class="alert alert-success">
+                                            {{ message }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-5">
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <p>Проверьте правильность введенных данных</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-5">
+                            <div class="modal modal-signin position-static d-block py-5" tabindex="-1" role="dialog"
+                                 id="modalSignin">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content rounded-4 shadow">
+                                        <div class="title-box-2 bi-justify-left">
+                                            <h5 class="title-left">
+                                                Форма авторизации
+                                            </h5>
+                                        </div>
+                                        <div class="modal-body p-5 pt-0">
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                {% for field in form %}
+                                                    <div class="form-floating color-b mb-3">
+                                                        {{ field }}
+                                                        <label class="floatingInput"
+                                                               for="{{ form.title.id_for_label }}">{{ field.label }}</label>
+                                                    </div>
+                                                {% endfor %}
+                                                <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary"
+                                                        type="submit">Войти
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- End Hero Section -->
+{% endblock %}

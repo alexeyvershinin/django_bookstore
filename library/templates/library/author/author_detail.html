@@ -1,0 +1,94 @@
+{% extends 'base.html' %}\
+{% load user_tags %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title }}/{{ author.full_name }}</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    {% include 'inc/_hero.html' %}
+{% endblock %}
+
+{% block content %}
+    <section class="blog-wrapper sect-pt4" id="blog">
+        <div class="container">
+            <div class="row">
+                {% include 'inc/_alerts.html' %}
+                <div class="col-md-8">
+                    <div class="post-box">
+                        {% if author.photo %}
+                            <div class="post-thumb">
+                                <img src="{{ author.photo.url }}" class="img-fluid" alt="">
+                            </div>
+                        {% else %}
+                            <div class="post-thumb о">
+                                <img src="{% static 'assets/img/placeholder.jpg' %}" class="img-fluid" alt="">
+                            </div>
+                        {% endif %}
+                        <div class="post-meta">
+                            <h1 class="article-title">{{ author.full_name }}</h1>
+                            <ul>
+                                <li>
+                                    <span class="bi bi-calendar-check">  Дата рождения:</span><a> {{ author.birth_date }}</a>
+                                </li>
+                            </ul>
+                            <ul>
+                                {% if author.death_date is None %}
+                                    <li>
+                                        <span class="bi bi-calendar2-x-fill">  </span><a> жив по сей день</a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <span class="bi bi-calendar2-x-fill">  Дата смерти:</span><a> {{ author.death_date }}</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="article-content">
+                            <p>
+                                {{ author.biography }}
+                            </p>
+                            <blockquote class="blockquote">
+                                <p class="mb-0">В описании использованы материалы сайта <a
+                                        href="https://book24.ru">book24.ru</a></p>
+                            </blockquote>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="widget-sidebar">
+                        <h5 class="sidebar-title">Книги</h5>
+                        <div class="sidebar-content">
+                            <div class="stars">
+                                <ul class="list-sidebar">
+                                    {% for book in author.book_set.all %}
+                                        <li>
+                                            <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+{#                    {% if request.user.is_superuser or is_employee is True %}#}
+{#                        <div class="widget-sidebar widget-tags">#}
+{#                            <h5 class="sidebar-title">Дополнительно</h5>#}
+{#                            <div>#}
+{#                                <span class="bi bi-pencil-square"></span> <a href="{% url 'edit_author' author.pk %}"><span>Редактировать информацию об авторе</span></a>#}
+{#                            </div>#}
+{#                            <div>#}
+{#                                <span class="bi bi-trash"></span> <a href="{% url 'delete_author' author.pk %}"><span>Удалить запись об авторе</span></a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    {% endif %}#}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

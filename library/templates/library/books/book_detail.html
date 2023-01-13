@@ -1,0 +1,186 @@
+{% extends 'base.html' %}\
+{% load user_tags %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title }}/{{ book.title }}</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    {% include 'inc/_hero.html' %}
+{% endblock %}
+
+{% block content %}
+    <!-- ======= Blog section ======= -->
+    <section class="blog-wrapper sect-pt4" id="blog">
+        <div class="container">
+            <div class="row">
+                {% include 'inc/_alerts.html' %}
+                <div class="col-md-8">
+                    <div class="post-box">
+                        <div class="post-thumb">
+                            {% if book.photo_cover %}
+                                <img src="{{ book.photo_cover.url }}" class="img-fluid" width="375" alt="">
+                            {% else %}
+                                <img src="{% static 'assets/img/no_foto.jpg' %}" class="img-fluid" width="375" alt="">
+                            {% endif %}
+                            {% if book.photo_back %}
+                                <img src="{{ book.photo_back.url }}" class="img-fluid" width="375" alt="">
+                            {% else %}
+                                <img src="{% static 'assets/img/no_foto.jpg' %}" class="img-fluid" width="375" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="post-meta">
+                            <h1 class="article-title">{{ book.title }}</h1>
+                            <ul>
+                                <li>
+                                    <span class="bi bi-person"></span><a
+                                        href="{{ book.owner.get_absolute_url }}"> {{ book.owner }}</a>
+                                </li>
+                                <li>
+                                    <span class="bi bi-tags"></span>
+                                    {% for genre in book.genres.all %}
+                                        <a href="{{ genre.get_absolute_url }}">{{ genre.title }}</a>
+                                    {% endfor %}
+                                </li>
+                                <li>
+                                    <span class="bi bi-cash"></span>
+                                    <a> {{ book.price }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="article-content">
+                            <p>
+                                {{ book.description }}
+                            </p>
+                            <blockquote class="blockquote">
+                                <p class="mb-0">В описании использованы материалы сайта <a
+                                        href="https://book24.ru">book24.ru</a></p>
+                            </blockquote>
+                        </div>
+
+                    </div>
+                    <div class="form-comments">
+                        <div class="title-box-2">
+                            <h3 class="title-left">
+                                Оставить отзыв
+                            </h3>
+                        </div>
+                        {% if user.is_authenticated %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ reviews_form.as_p }}
+                                </div>
+                                <button type="submit" class="button button-a button-rouded">Добавить отзыв</button>
+                            </form>
+                        {% else %}
+                            <a class="btn btn-outline-primary" href="{% url 'user_login' %}?next={{ request.path }}">Зарегистрируйтесь,
+                                чтобы оставлять отзывы</a><br>
+                        {% endif %}
+                    </div>
+                    <div class="box-comments">
+                        <div class="title-box-2">
+                            <h4 class="title-comments title-left">Отзывы о книге</h4>
+                        </div>
+                        {% if reviews %}
+                            <ul class="list-comments">
+                                {% for item in reviews %}
+                                    <li>
+                                        <div class="comment-avatar">
+                                            <img src="{% static 'assets/img/avatar.png' %}" alt="">
+                                        </div>
+                                        <div class="comment-details">
+                                            <h4 class="comment-author">{{ item.author }}</h4>
+                                            <span>{{ item.date_posted }}</span>
+                                            <div class="stars">
+                                                {% if item.raiting == 1 %}
+                                                    <i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                {% elif item.raiting == 2 %}
+                                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star"></i><i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                {% elif item.raiting == 3 %}
+                                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                        class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+                                                    <i class="bi bi-star"></i>
+                                                {% elif item.raiting == 4 %}
+                                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star"></i>
+                                                {% elif item.raiting == 5 %}
+                                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                {% endif %}
+                                            </div>
+                                            <p>
+                                                {{ item.content|safe }}
+                                            </p>
+                                        </div>
+                                        <hr>
+                                    </li>
+                                {% endfor %}
+                                {% else %}
+                                <h3><i>Здесь пока нет отзывов...</i></h3>
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="widget-sidebar">
+                        <h5 class="sidebar-title">Описание</h5>
+                        <div class="sidebar-content">
+                            <div class="stars">
+                                <ul class="list-sidebar">
+                                    <li>
+                                        <a>Год издания книги: {{ book.pub_date }}</a>
+                                    </li>
+                                    <li>
+                                        <a>Количество страниц: {{ book.num_pages }}</a>
+                                    </li>
+                                    <li>
+                                        <a>Тип обложки: {{ book.cover_type }}</a>
+                                    </li>
+                                    <li>
+                                        <a>Формат книги: {{ book.sizes }}</a>
+                                    </li>
+                                    <li>
+                                        <a>Рейтинг книги: {% include 'inc/_raiting.html' %}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-sidebar widget-tags">
+                        <h5 class="sidebar-title">Купить</h5>
+                        <form method="post" action="{% url 'add_cart' book.pk %}">
+                            {% csrf_token %}
+                            {{ form_cart }}
+                            <input type="submit" class="btn btn-outline-primary" value="Добавить в корзину">
+                        </form>
+                    </div>
+{#                    {% if request.user.is_superuser or is_employee is True %}#}
+{#                        <div class="widget-sidebar widget-tags">#}
+{#                            <h5 class="sidebar-title">Дополнительно</h5>#}
+{#                            <div>#}
+{#                                <span class="bi bi-pencil-square"></span> <a href="{% url 'edit_book' book.pk %}"><span>Редактировать информацию о книге</span></a>#}
+{#                            </div>#}
+{#                            <div>#}
+{#                                <span class="bi bi-trash"></span> <a href="{% url 'delete_book' book.pk %}"><span>Удалить запись о книге</span></a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    {% endif %}#}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Blog -->
+{% endblock %}
+

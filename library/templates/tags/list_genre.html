@@ -1,0 +1,6 @@
+{% for item in genre %}
+    <li class="breadcrumb-item">
+        {# <a href="{{ item.get_absolute_url }}">{{ item.title }}<span> {{ item.cnt }}</span></a> #}
+        <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+    </li>
+{% endfor %}

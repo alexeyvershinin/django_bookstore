@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    {% include 'inc/_hero.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- ======= Blog section ======= -->
+    <section id="blog" class="blog-mf sect-pt4 route">
+        <div class="container">
+            <div class="row justify-content-center">
+                {% include 'inc/_alerts.html' %}
+                <div class="col-sm-12">
+                    <div class="title-box text-center">
+                        <p class="subtitle-a">
+                            Служебная страница для сотрудников магазина<br>
+                            Каталог книг
+                        </p>
+                        <div class="line-mf"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-bordered table-striped table-hover align-middle text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Картинка</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Автор</th>
+                        <th scope="col">Жанр книги</th>
+                        <th scope="col">Количество страниц</th>
+                        <th scope="col">Тип обложки</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Формат издания</th>
+                        <th scope="col">Год издания</th>
+                        <th scope="col">Редактирование</th>
+                        <th scope="col">Удаление</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in books %}
+                        <tr>
+                            <th scope="row">
+                                {{ item.id }}
+                            </th>
+                            <td>
+                                {% if item.photo_cover %}
+                                    <img src="{{ item.photo_cover.url }}" alt="..." width="50">
+                                {% else %}
+                                    <img src="{% static 'assets/img/no_foto.jpg' %}" alt="..." width="50">
+                                {% endif %}
+                            </td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.owner }}</td>
+                            <td>
+                                {% for genre in item.genres.all %}
+                                    {{ genre.title }}
+                                {% endfor %}
+                            </td>
+                            <td>{{ item.num_pages }}</td>
+                            <td>{{ item.cover_type }}</td>
+                            <td>{{ item.price }}</td>
+                            <td>{{ item.sizes }}</td>
+                            <td>{{ item.pub_date }}</td>
+                            <td>
+                                <a href="{% url 'edit_book' item.pk %}" class="btn btn-primary">Редактировать</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete_book' item.pk %}" class="btn btn-danger">Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+    {% include 'inc/_pagination.html' %}
+
+    {% include 'inc/_statistic.html' %}
+
+{% endblock %}
+
+

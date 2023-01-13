@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    {% include 'inc/_hero.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- ======= Blog section ======= -->
+    <section id="blog" class="blog-mf sect-pt4 route">
+        <div class="container">
+            <div class="row justify-content-center">
+                {% include 'inc/_alerts.html' %}
+                <div class="col-sm-12">
+                    <div class="title-box text-center">
+                        <p class="subtitle-a">
+                            Служебная страница для сотрудников магазина<br>
+                            Список авторов
+                        </p>
+                        <div class="line-mf"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-bordered table-striped table-hover align-middle text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">ФИО</th>
+                        <th scope="col">Фото автора</th>
+                        <th scope="col">Дата рождения</th>
+                        <th scope="col">Дата смерти</th>
+                        <th scope="col">Краткая биография</th>
+                        <th scope="col">Список книг</th>
+                        <th scope="col">Редактирование</th>
+                        <th scope="col">Удаление</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in authors %}
+                        <tr>
+                            <th scope="row">
+                                {{ item.id }}
+                            </th>
+                            <td>{{ item.full_name }}</td>
+                            <td>
+                                {% if item.photo %}
+                                    <img src="{{ item.photo.url }}" alt="..." width="50">
+                                {% else %}
+                                    <img src="{% static 'assets/img/no_foto.jpg' %}" alt="..." width="50">
+                                {% endif %}
+                            </td>
+                            <td>{{ item.birth_date }}</td>
+                            <td>{% if item.death_date is None %}
+                                жив по сей день
+                            {% else %}
+                                {{ item.death_date }}
+                            {% endif %}
+                            </td>
+                            <td>{{ item.biography|truncatewords:10 }}</td>
+                            <td>
+                                {% for book in item.book_set.all %}
+                                    {{ book.title }}<br>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{% url 'edit_author' item.pk %}" class="btn btn-primary">Редактировать</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete_author' item.pk %}" class="btn btn-danger">Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+    {% include 'inc/_pagination.html' %}
+
+    {% include 'inc/_statistic.html' %}
+
+{% endblock %}
+
+

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}\
+{% load user_tags %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title }}/{{ book.title }}</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    {% include 'inc/_hero.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <section id="services" class="services-mf pt-5 route">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="title-box text-center">
+                        <p class="subtitle-a">
+                            Подтвердите удаление записи
+                        </p>
+                        <div class="line-mf"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="service-box">
+                        <div class="service-ico">
+                            <span class="ico-circle"><i class="bi bi-trash"></i></span>
+                        </div>
+                        <div class="service-content">
+                            <h2 class="s-title">Удалить запись о книге</h2>
+                            <p class="s-description text-center">
+                                Вы уверены что хотите удалить запись?
+                            </p>
+                        </div>
+                        <div>
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="button" class="btn btn-secondary" value="Previous Page" onClick="javascript:history.go(-1);">Назад</button>
+                                <button type="submit" class="btn btn-primary">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End Blog -->
+{% endblock %}
+

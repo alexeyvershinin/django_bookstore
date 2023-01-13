@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    {% include 'inc/_hero.html' %}
+{% endblock %}
+
+{% block content %}
+
+    <section id="work" class="portfolio-mf sect-pt4 route">
+        <div class="container">
+            <div class="row">
+                {% include 'inc/_alerts.html' %}
+                <div class="col-sm-12">
+                    <div class="title-box text-center">
+                        <p class="subtitle-a">
+                            Здесь вы можете ознакомиться с авторами книг
+                        </p>
+                        <div class="line-mf"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                {% for author in authors %}
+                    <div class="col-md-4">
+                        <div class="work-box">
+                            {% if author.photo %}
+                                <a href="{{ author.photo.url }}" data-gallery="portfolioGallery"
+                                   class="portfolio-lightbox">
+                                    <div class="work-img">
+                                        <img src="{{ author.photo.url }}" alt="" class="img-fluid">
+                                    </div>
+                                </a>
+                            {% else %}
+                                <a href="{% static 'assets/img/placeholder.jpg' %}" data-gallery="portfolioGallery"
+                                   class="portfolio-lightbox">
+                                    <div class="work-img">
+                                        <img src="{% static 'assets/img/placeholder.jpg' %}" alt="" class="img-fluid">
+                                    </div>
+                                </a>
+                            {% endif %}
+                            <div class="work-content">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h2 class="w-title">{{ author.full_name }}</h2>
+                                        <div class="w-more">
+                                            <span class="w-date">{{ author.birth_date }}</span> /
+                                            {% if author.death_date is None %}
+                                                <span class="w-date">жив по сей день</span>
+                                            {% else %}
+                                                <span class="w-date">{{ author.death_date }}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="w-like">
+                                            <a href="{{ author.get_absolute_url }}"> <span
+                                                    class="bi bi-file-earmark-richtext"></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section><!-- End Portfolio Section -->
+    {% include 'inc/_pagination.html' %}
+
+{% endblock %}
+
+

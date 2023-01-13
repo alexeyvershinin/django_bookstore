@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Домашняя страница</title>
+{% endblock %}
+
+{% block header %}
+    {% include 'inc/_header.html' %}
+{% endblock %}
+
+{% block hero %}
+    <!-- ======= Hero Section ======= -->
+    <div id="hero" class="hero route bg-image" style="background-image: url({% static 'assets/img/book.jpg' %})">
+        <div class="overlay-itro"></div>
+        <div class="hero-content display-table">
+            <div class="table-cell">
+                <div class="container">
+                    <!--<p class="display-6 color-d">Hello, world!</p>-->
+                    <h1 class="hero-title mb-4">Добро пожаловать в Книжный магазин</h1>
+                    <p class="hero-subtitle"><span class="typed"
+                                                   data-typed-items="Книги, Журналы, Коллекционные издания, Подписки"></span>
+                    </p>
+                    <!-- <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#about" role="button">Learn More</a></p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Hero Section -->
+{% endblock %}
